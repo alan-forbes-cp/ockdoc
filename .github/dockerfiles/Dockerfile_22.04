@@ -56,6 +56,7 @@ RUN pip install cmakelint colorama flake8 lit pylint requests virtualenv yapf py
 
 # FROM OUR CURRENT INSTALLS PLUS ANY NEW EXTRAS - if not already added
 
+RUN apt-get -y install sudo
 RUN apt install -y zstd
 RUN apt install -y gnupg
 RUN apt install -y gcc g++

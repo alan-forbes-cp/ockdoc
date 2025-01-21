@@ -56,6 +56,7 @@ RUN PIPX_HOME=/usr/local/share/pipx PIPX_BIN_DIR=/usr/local/bin PIPX_MAN_DIR=/us
 
 # FROM OUR CURRENT INSTALLS PLUS ANY NEW EXTRAS - if not already added
 
+RUN apt-get -y install sudo
 RUN apt install -y zstd
 RUN apt install -y gnupg
 RUN apt install -y gcc g++
