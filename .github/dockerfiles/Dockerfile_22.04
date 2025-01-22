@@ -25,12 +25,18 @@ RUN wget -qO /etc/apt/sources.list.d/lunarg-vulkan-1.3.243-jammy.list https://pa
 # Sync the two above package repositories
 RUN apt-get update
 
+# Add clang-tidy
+wget -qO - https://apt.llvm.org/llvm-snapshot.gpg.key | gpg --dearmor - | tee /usr/share/keyrings/llvm-archive-keyring.gpg >/dev/null
+echo 'deb [signed-by=/usr/share/keyrings/llvm-archive-keyring.gpg] http://apt.llvm.org/jammy/ llvm-toolchain-jammy-19 main' | tee /etc/apt/sources.list.d/llvm.list >/dev/null
+RUN apt-get update
+apt-get install --yes clang-tidy-19
+
 # Install minimum requirements
 RUN apt-get install --yes cmake libtinfo-dev
 # Install vulkan-sdk
 RUN apt-get install --yes vulkan-sdk
 # Install 32-bit requirements
-RUN apt-get install --yes gcc-multilib g++-multilib libc6-dev:i386 lib32tinfo-dev
+RUN apt-get install --yes gcc-multilib g++-multilib libc6-dev:i386 lib32tinfo-dev lib32ncurses-dev
 # Install Arm requirements
 RUN apt-get install --yes gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf
 # Install AArch64 requirements
@@ -47,6 +53,8 @@ RUN apt-get install --yes parallel
 RUN apt-get install --yes qemu-user
 # Install pkg-config for dpc++ builds and locally built spir-v
 RUN apt-get install --yes pkg-config
+# Install spirv tools
+RUN apt-get install --yes spirv-tools
 
 # Set-up pip
 RUN update-alternatives --install /usr/bin/pip pip `which pip3` 30
