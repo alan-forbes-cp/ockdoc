@@ -26,10 +26,10 @@ RUN wget -qO /etc/apt/sources.list.d/lunarg-vulkan-1.3.243-jammy.list https://pa
 RUN apt-get update
 
 # Add clang-tidy
-wget -qO - https://apt.llvm.org/llvm-snapshot.gpg.key | gpg --dearmor - | tee /usr/share/keyrings/llvm-archive-keyring.gpg >/dev/null
-echo 'deb [signed-by=/usr/share/keyrings/llvm-archive-keyring.gpg] http://apt.llvm.org/jammy/ llvm-toolchain-jammy-19 main' | tee /etc/apt/sources.list.d/llvm.list >/dev/null
+RUN wget -qO - https://apt.llvm.org/llvm-snapshot.gpg.key | gpg --dearmor - | tee /usr/share/keyrings/llvm-archive-keyring.gpg >/dev/null
+RUN echo 'deb [signed-by=/usr/share/keyrings/llvm-archive-keyring.gpg] http://apt.llvm.org/jammy/ llvm-toolchain-jammy-19 main' | tee /etc/apt/sources.list.d/llvm.list >/dev/null
 RUN apt-get update
-apt-get install --yes clang-tidy-19
+RUN apt-get install --yes clang-tidy-19
 
 # Install minimum requirements
 RUN apt-get install --yes cmake libtinfo-dev
