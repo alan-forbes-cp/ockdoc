@@ -58,6 +58,7 @@ RUN apt-get install --yes python3-colorama python3-distro python3-flake8 python3
 RUN PIPX_HOME=/usr/local/share/pipx PIPX_BIN_DIR=/usr/local/bin PIPX_MAN_DIR=/usr/local/share/man pipx install cmakelint lit pylint clang-format==19.1.0
 
 RUN apt-get -y install sudo
+RUN apt-get -y install gh
 RUN apt install -y zstd
 RUN apt install -y gnupg
 RUN apt install -y gcc g++
