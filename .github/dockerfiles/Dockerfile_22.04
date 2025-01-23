@@ -1,15 +1,10 @@
 FROM ubuntu:22.04
 
 RUN apt-get update 
-
-# FROM INFRA UBUNTU BASE
-
 RUN apt-get install -y git git-crypt wget curl jq xz-utils build-essential zlib1g-dev lsb-release libssl-dev
 # Set the timezone, required to avoid hanging on input
 ENV TZ=Europe/London
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-
-# FROM 22 OCK BASE - if not already added
 
 # Enable ability to install foreign packages for cross compilation
 RUN dpkg --add-architecture i386
@@ -62,17 +57,13 @@ RUN update-alternatives --install /usr/bin/pip pip `which pip3` 30
 # Install python packages
 RUN pip install cmakelint colorama flake8 lit pylint requests virtualenv yapf python-gitlab distro clang-format==19.1.0
 
-# FROM OUR CURRENT INSTALLS PLUS ANY NEW EXTRAS - if not already added
-
 RUN apt-get -y install sudo
 RUN apt install -y zstd
 RUN apt install -y gnupg
 RUN apt install -y gcc g++
 RUN apt install -y file
 
-# DO THIS LAST
-
-# Install recent version of ccache in /usr
+# Lastly, install recent version of ccache in /usr
 # Redis support requires ccache 4.4 or newer.
 RUN git clone https://github.com/ccache/ccache.git && \
   cd ccache && \
